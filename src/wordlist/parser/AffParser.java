@@ -109,7 +109,7 @@ public class AffParser extends Parser {
     private void processAffixes(String[] seg, String line) {
         // Preparation --
         if(seg.length < 5) {
-            storage.initAffix(seg[1], Integer.parseInt(seg[3]));
+            storage.initAffix(seg[1], Integer.parseInt(seg[3]), seg[0].equals("PFX"));
         } 
         // New affixe --
         else {

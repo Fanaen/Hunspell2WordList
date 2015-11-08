@@ -23,9 +23,9 @@
  */
 package wordlist.parser;
 
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import wordlist.model.Affix;
 
 /**
  *
@@ -57,7 +57,12 @@ public class DicParser extends Parser {
             identifier = processIdentifier(identifier);
             affixes = processAffixes(affixes);
             
-            System.out.println("# " + word + ": " + affixes + " " + identifier);    
+            System.out.println("> " + word + ": " + affixes + " " + identifier);
+            for (Affix a : storage.getAffixes(affixes)) {
+                for (String result : a.apply(word, identifier)) {
+                    System.out.println("   * " + result);                    
+                }
+            }
         }   
     }
     

@@ -30,21 +30,61 @@ package wordlist.model;
 public class AffixOption {
     
     // -- Attributes --
-    private final String param1;
-    private final String param2; 
-    private final String param3;
-    private final String param4;
+    private final String toStrip;
+    private final String affix; 
+    private final String conditions;
+    private final String identifiers;
     
     // -- Constructors --
 
-    public AffixOption(String param1, String param2, String param3, String param4) {
-        this.param1 = param1;
-        this.param2 = param2; 
-        this.param3 = param3;
-        this.param4 = param4;
+    public AffixOption(String stripping, String affix, String conditions, String identifiers) {
+        this.toStrip = stripping;
+        this.affix = affix; 
+        this.conditions = conditions;
+        this.identifiers = identifiers;
     }
     
     // -- Methods --
     
+    public boolean isPrefixApplyable(String word, String identifier) {
+        if(conditions.equals("0")) return true;
+        //return true;
+        return word.matches(conditions +".+");
+    }
+
+    public boolean isSuffixApplyable(String word, String identifier) {
+        if(conditions.equals("0")) return true;
+        //return true;
+        return word.matches(".+" + conditions);
+    }
+    
+    public String applyPrefix(String word, String identifier) {
+        return getAffix() +  word.substring(getStripping().length()) + " <" + getStripping() + "> " + identifiers + " " + conditions + " " + word.matches(conditions +".+");
+    }
+
+    public String applySuffix(String word, String identifier) {
+        return word.substring(0, word.length() - getStripping().length()) + getAffix() + " <" + getStripping() + "> " + identifiers + " " + conditions + " " + word.matches(".+" + conditions);
+    }
+    
     // -- Getters & Setters --
+
+    public String getStripping() {
+        if(toStrip.equals("0")) return "";
+        return toStrip;
+    }
+
+    public String getAffix() {
+        if(affix.equals("0")) return "";
+        return affix;
+    }
+
+    public String getConditions() {
+        return conditions;
+    }
+
+    public String getIdentifiers() {
+        return identifiers;
+    }
+    
+    
 }

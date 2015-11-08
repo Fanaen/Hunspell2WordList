@@ -24,7 +24,10 @@
 package wordlist.model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -34,11 +37,13 @@ public class Affix {
     
     // -- Attributes --
     protected List<AffixOption> optionList;
+    protected boolean prefix;
     
     // -- Constructors --
 
-    public Affix(int nbItems) {
+    public Affix(boolean prefix, int nbItems) {
         optionList = new ArrayList<>(nbItems);
+        this.prefix = prefix;
     }
     
     // -- Methods --
@@ -53,4 +58,21 @@ public class Affix {
     
     
     // -- Getters & Setters --
+
+    public List<String> apply(String word, String identifier) {
+        List<String> list = new LinkedList<>();
+        
+        for (AffixOption option : optionList) {
+            if(prefix) {
+                if(option.isPrefixApplyable(word, identifier))
+                    list.add(option.applyPrefix(word, identifier));
+            }
+            else {
+                if(option.isSuffixApplyable(word, identifier))
+                    list.add(option.applySuffix(word, identifier));
+            }            
+        }
+        
+        return list;
+    }
 }
