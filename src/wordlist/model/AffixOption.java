@@ -33,6 +33,7 @@ public class AffixOption {
     private boolean prefix = true;
     private final String toStrip;
     private final String affix; 
+    private final String newAffixes; 
     private final String conditions;
     private final String identifiers;
     
@@ -40,9 +41,12 @@ public class AffixOption {
 
     public AffixOption(String stripping, String affix, String conditions, String identifiers) {
         this.toStrip = stripping;
-        this.affix = affix; 
         this.conditions = conditions;
         this.identifiers = identifiers;
+        
+        String[] affixSplit = affix.split("/");
+        this.affix = affixSplit[0];
+        this.newAffixes = affixSplit.length > 1 ? affixSplit[1] : "";
     }
     
     // -- Methods --
@@ -50,7 +54,6 @@ public class AffixOption {
     public boolean isApplyable(Word word) {
         boolean applyable = false;
         if(conditions.equals(".")) applyable = true;
-        
         
         if(prefix) {
             applyable = word.getContent().matches(conditions +".+");   
@@ -68,8 +71,8 @@ public class AffixOption {
     public Word apply(Word word) {
         String content = word.getContent();
         
-        System.out.print("  * Apply " + (prefix ? "prefix" : "suffix") + " to " + content + " ");
-        display();
+        //System.out.print("  * Apply " + (prefix ? "prefix" : "suffix") + " to " + content + " ");
+        //display();
         
         if(prefix) {
             content = getAffix() + content.substring(getStripping().length());
@@ -78,6 +81,8 @@ public class AffixOption {
             content = content.substring(0, content.length() - getStripping().length()) + getAffix();
         }
         word.setContent(content);
+        
+        word.setAffixes(newAffixes);
         
         return word;
     }

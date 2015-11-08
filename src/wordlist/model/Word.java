@@ -79,6 +79,12 @@ public class Word implements Cloneable {
             // Apply each affix (multiple options) --
             for (Word w : a.apply(this, storage)) {
                 result.add(w);
+                
+                // New affixes, restart --
+                if(!w.getAffixes().equals("")) {
+                    w.processAffixes(storage);
+                    result.addAll(w.processWords(storage));
+                }
             }
         }
         

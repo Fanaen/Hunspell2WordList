@@ -53,6 +53,7 @@ public class WordList {
         
         // Process the word file --
         dic.processFile("data/" + fileName + ".dic");
+        dic.displayCount();
     }
     
 }

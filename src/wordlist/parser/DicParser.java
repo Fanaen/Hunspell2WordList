@@ -38,6 +38,8 @@ public class DicParser extends Parser {
     // -- Attributes --
     protected Pattern p;
     protected Matcher m;
+    protected long lineCount = 0;
+    protected long wordCount = 0;
     
     // -- Constructors --
     
@@ -57,15 +59,22 @@ public class DicParser extends Parser {
             word.processIdentifiers(storage);
             word.processAffixes(storage);
             
-            System.out.print("> ");
-            word.display();
-            
+            //System.out.print("> ");
+            //word.display();
             List<Word> words = word.processWords(storage);
             for (Word w : words) {
-                System.out.print("  * ");
-                w.display();
+                //System.out.print("  * ");
+                //w.display();
+                wordCount++;
             }
+            lineCount++;
         }   
+    }
+    
+    public void displayCount() {
+        System.out.println("DicParser stats:");
+        System.out.println(" * " + wordCount + " words");
+        System.out.println(" * " + lineCount + " lines");
     }
     
     // -- Getters & Setters --
