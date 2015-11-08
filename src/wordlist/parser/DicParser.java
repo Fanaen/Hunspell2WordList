@@ -23,9 +23,11 @@
  */
 package wordlist.parser;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import wordlist.model.Affix;
+import wordlist.model.Word;
 
 /**
  *
@@ -50,46 +52,22 @@ public class DicParser extends Parser {
         m = p.matcher(line.trim());
         
         if(m.matches()) {
-            String word = m.group(1);
-            String affixes = m.group(2);
-            String identifier = m.group(3);
+            Word word = new Word(m.group(1), m.group(2),  m.group(3));
             
-            identifier = processIdentifier(identifier);
-            affixes = processAffixes(affixes);
+            word.processIdentifiers(storage);
+            word.processAffixes(storage);
             
-            System.out.println("> " + word + ": " + affixes + " " + identifier);
-            for (Affix a : storage.getAffixes(affixes)) {
-                for (String result : a.apply(word, identifier)) {
-                    System.out.println("   * " + result);                    
-                }
+            System.out.print("> ");
+            word.display();
+            
+            List<Word> words = word.processWords(storage);
+            for (Word w : words) {
+                System.out.print("  * ");
+                w.display();
             }
         }   
     }
     
     // -- Getters & Setters --
-
-    private String processIdentifier(String identifier) {
-        try {
-            // Try to convert it to Int 
-            int reference = Integer.parseInt(identifier);
-            return storage.getAM(reference);
-                        
-        } catch(NumberFormatException ex) {
-            // If not parsable, leave as is --
-            return "#" + identifier;
-        }
-    }
-
-    private String processAffixes(String affixes) {
-        try {
-            // Try to convert it to Int 
-            int reference = Integer.parseInt(affixes);
-            return storage.getAF(reference);
-                        
-        } catch(NumberFormatException ex) {
-            // If not parsable, leave as is --
-            return "#" + affixes;
-        }
-    }
     
 }

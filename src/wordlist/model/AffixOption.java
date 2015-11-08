@@ -30,6 +30,7 @@ package wordlist.model;
 public class AffixOption {
     
     // -- Attributes --
+    private boolean prefix = true;
     private final String toStrip;
     private final String affix; 
     private final String conditions;
@@ -46,24 +47,43 @@ public class AffixOption {
     
     // -- Methods --
     
-    public boolean isPrefixApplyable(String word, String identifier) {
-        if(conditions.equals("0")) return true;
-        //return true;
-        return word.matches(conditions +".+");
-    }
-
-    public boolean isSuffixApplyable(String word, String identifier) {
-        if(conditions.equals("0")) return true;
-        //return true;
-        return word.matches(".+" + conditions);
+    public boolean isApplyable(Word word) {
+        boolean applyable = false;
+        if(conditions.equals(".")) applyable = true;
+        
+        
+        if(prefix) {
+            applyable = word.getContent().matches(conditions +".+");   
+        }
+        else {
+            applyable = word.getContent().matches(".+" + conditions);
+        }
+        
+        //System.out.print("  * " + applyable + " for " + word.getContent() + " ");
+        //display();
+        
+        return applyable;
     }
     
-    public String applyPrefix(String word, String identifier) {
-        return getAffix() +  word.substring(getStripping().length()) + " <" + getStripping() + "> " + identifiers + " " + conditions + " " + word.matches(conditions +".+");
+    public Word apply(Word word) {
+        String content = word.getContent();
+        
+        System.out.print("  * Apply " + (prefix ? "prefix" : "suffix") + " to " + content + " ");
+        display();
+        
+        if(prefix) {
+            content = getAffix() + content.substring(getStripping().length());
+        }
+        else {
+            content = content.substring(0, content.length() - getStripping().length()) + getAffix();
+        }
+        word.setContent(content);
+        
+        return word;
     }
-
-    public String applySuffix(String word, String identifier) {
-        return word.substring(0, word.length() - getStripping().length()) + getAffix() + " <" + getStripping() + "> " + identifiers + " " + conditions + " " + word.matches(".+" + conditions);
+    
+    public void display() {
+        System.out.println("(" + toStrip + ", " + affix + ", " + conditions + ", " + identifiers +")");
     }
     
     // -- Getters & Setters --
@@ -85,6 +105,12 @@ public class AffixOption {
     public String getIdentifiers() {
         return identifiers;
     }
+
+    public void setPrefix(boolean prefix) {
+        this.prefix = prefix;
+    }
+    
+    
     
     
 }
