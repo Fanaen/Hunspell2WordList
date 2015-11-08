@@ -21,39 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package wordlist;
-
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type;
-import wordlist.model.ReferenceStorage;
-import wordlist.parser.AffParser;
-import wordlist.parser.DicParser;
+package wordlist.model;
 
 /**
  *
  * @author Fanaen <contact@fanaen.fr>
  */
-public class WordList {
+public class AffixOption {
+    
+    // -- Attributes --
+    private final String param1;
+    private final String param2; 
+    private final String param3;
+    private final String param4;
+    
+    // -- Constructors --
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
-        // Initialisation --
-        AffParser aff = new AffParser();
-        DicParser dic = new DicParser();
-        String fileName = "fr-moderne";
-        
-        // Process the reference file --
-        aff.processFile("data/" + fileName + ".aff");
-        
-        // Transfer references --
-        ReferenceStorage storage = aff.getStorage();
-        dic.setStorage(storage);
-        storage.displayStatistics();
-        
-        // Process the word file --
-        dic.processFile("data/" + fileName + ".dic");
+    public AffixOption(String param1, String param2, String param3, String param4) {
+        this.param1 = param1;
+        this.param2 = param2; 
+        this.param3 = param3;
+        this.param4 = param4;
     }
     
+    // -- Methods --
+    
+    // -- Getters & Setters --
 }

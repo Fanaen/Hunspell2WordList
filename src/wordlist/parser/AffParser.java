@@ -25,6 +25,8 @@ package wordlist.parser;
 
 import java.util.HashSet;
 import java.util.Set;
+import wordlist.model.Affix;
+import wordlist.model.AffixOption;
 import wordlist.model.ReferenceStorage;
 
 /**
@@ -59,7 +61,7 @@ public class AffParser extends Parser {
             processFlag(seg, line);
         }
         else {
-            addFlag(seg);
+            addFlag(seg, line);
         }
     }
     
@@ -76,14 +78,14 @@ public class AffParser extends Parser {
                 storage.addAF(line.substring(3).trim());
                 break;
             case "PFX":
-                break;
             case "SFX":
+                processAffixes(seg, line);
                 break;
             default:
         }        
     }
 
-    private void addFlag(String[] seg) {
+    private void addFlag(String[] seg, String line) {
         String flag = seg[0];
         flagSet.add(flag);
         
@@ -95,14 +97,24 @@ public class AffParser extends Parser {
                 storage.initAF(Integer.parseInt(seg[1]));
                 break;
             case "PFX":
-                System.out.println("Flag " + flag + ": " + seg[1]);
-                break;
             case "SFX":
-                System.out.println("Flag " + flag + ": " + seg[1]);
+                processAffixes(seg, line);
                 break;
             default:
-                System.out.println("Flag " + flag);
+                //System.out.println("Flag " + flag);
                 
+        }
+    }
+
+    private void processAffixes(String[] seg, String line) {
+        // Preparation --
+        if(seg.length < 5) {
+            storage.initAffix(seg[1], Integer.parseInt(seg[3]));
+        } 
+        // New affixe --
+        else {
+            Affix affix = storage.getAffix(seg[1]);
+            affix.addOption(new AffixOption(seg[2], seg[3], seg[4], seg.length >= 6 ? seg[5] : ""));
         }
     }
 }

@@ -24,8 +24,10 @@
 package wordlist.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  *
@@ -36,11 +38,13 @@ public class ReferenceStorage {
     // -- Attributes --
     protected List<String> AMArray;
     protected List<String> AFArray;
+    protected Map<String, Affix> affixArray;
     
     // -- Constructors --
     public ReferenceStorage() {
         AMArray = new ArrayList();
         AFArray = new ArrayList();
+        affixArray = new HashMap<>();
     }
     
     // -- Methods --
@@ -61,6 +65,10 @@ public class ReferenceStorage {
         AFArray.add(items);
     }
     
+    public void initAffix(String id, int nbItems) {
+        affixArray.put(id, new Affix(nbItems));
+    }
+    
     public boolean isReady() {
         return true;
     }
@@ -75,4 +83,20 @@ public class ReferenceStorage {
         return AFArray.get(reference - 1);
     }
     
+    public Affix getAffix(String id) {
+        return affixArray.get(id);
+    }
+
+    public void displayStatistics() {
+        System.out.println("References stats:");
+        System.out.println(" * " + AMArray.size() + " AM references");
+        System.out.println(" * " + AFArray.size() + " AF references");
+        System.out.println(" * " + affixArray.size() + " affixes");
+        
+        int count = 0;
+        for (Entry<String,Affix> entry : affixArray.entrySet()) {
+            count += entry.getValue().getNbOptions();
+        }
+        System.out.println(" * " + count + " affix options");
+    }
 }

@@ -21,39 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package wordlist;
+package wordlist.model;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type;
-import wordlist.model.ReferenceStorage;
-import wordlist.parser.AffParser;
-import wordlist.parser.DicParser;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Fanaen <contact@fanaen.fr>
  */
-public class WordList {
+public class Affix {
+    
+    // -- Attributes --
+    protected List<AffixOption> optionList;
+    
+    // -- Constructors --
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
-        // Initialisation --
-        AffParser aff = new AffParser();
-        DicParser dic = new DicParser();
-        String fileName = "fr-moderne";
-        
-        // Process the reference file --
-        aff.processFile("data/" + fileName + ".aff");
-        
-        // Transfer references --
-        ReferenceStorage storage = aff.getStorage();
-        dic.setStorage(storage);
-        storage.displayStatistics();
-        
-        // Process the word file --
-        dic.processFile("data/" + fileName + ".dic");
+    public Affix(int nbItems) {
+        optionList = new ArrayList<>(nbItems);
     }
     
+    // -- Methods --
+
+    public void addOption(AffixOption option) {
+        optionList.add(option);
+    }
+    
+    public int getNbOptions() {
+        return optionList.size();
+    }
+    
+    
+    // -- Getters & Setters --
 }
