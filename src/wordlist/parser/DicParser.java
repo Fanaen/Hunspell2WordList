@@ -40,7 +40,7 @@ public class DicParser extends Parser {
     // -- Constructors --
     
     public DicParser() {
-        p = Pattern.compile("^([^/\\t]+)/?([^\\t])\\t(.*)$");
+        p = Pattern.compile("^([^/\\t]+)/?(\\S*)\\t(.*)$");
     }
     
     // -- Methods --
@@ -71,7 +71,7 @@ public class DicParser extends Parser {
                         
         } catch(NumberFormatException ex) {
             // If not parsable, leave as is --
-            return identifier;
+            return "#" + identifier;
         }
     }
 
@@ -83,7 +83,7 @@ public class DicParser extends Parser {
                         
         } catch(NumberFormatException ex) {
             // If not parsable, leave as is --
-            return affixes;
+            return "#" + affixes;
         }
     }
     

@@ -23,7 +23,6 @@
  */
 package wordlist;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type;
 import wordlist.model.ReferenceStorage;
 import wordlist.parser.AffParser;
 import wordlist.parser.DicParser;
