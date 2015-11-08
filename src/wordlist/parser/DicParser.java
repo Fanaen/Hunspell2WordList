@@ -66,13 +66,7 @@ public class DicParser extends Parser {
         try {
             // Try to convert it to Int 
             int reference = Integer.parseInt(identifier);
-            Set<String> set = storage.getAM(reference);
-                    
-            identifier = "";
-            for (String id : set) {
-                identifier += id + " ";
-            }
-            return identifier;
+            return storage.getAM(reference);
                         
         } catch(NumberFormatException ex) {
             // If not parsable, leave as is --

@@ -21,44 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package wordlist.model;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+package wordlist.helper;
 
 /**
  *
  * @author Fanaen <contact@fanaen.fr>
  */
-public class ReferenceStorage {
+public class StringHelper {
     
-    // -- Attributes --
-    protected List<String> AMArray;
-    
-    // -- Constructors --
-    public ReferenceStorage() {
-        AMArray = new ArrayList();
+    public static String mergeSegments(String[] segs, int start, String sep) {
+        String result = "";
+        for (int i = start; i < segs.length; i++) {
+            result += (i == start ? "" : sep) + segs[i];
+        }
+        return result;
     }
-    
-    // -- Methods --
-
-    public void initAM(int nbItems) {
-        AMArray = new ArrayList(nbItems);
-    }
-    
-    public void addAM(String items) {
-        AMArray.add(items);
-    }
-    
-    public boolean isReady() {
-        return true;
-    }
-    
-    // -- Getters & Setters --
-
-    public String getAM(int reference) {
-        return AMArray.get(reference - 1);
-    }
-    
 }

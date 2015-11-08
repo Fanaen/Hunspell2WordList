@@ -56,7 +56,7 @@ public class AffParser extends Parser {
         String[] seg = line.split(" ");
         String flag = seg[0];
         if(flagSet.contains(flag)) {
-            processFlag(seg);
+            processFlag(seg, line);
         }
         else {
             addFlag(seg);
@@ -65,12 +65,12 @@ public class AffParser extends Parser {
     
     // -- Getters & Setters --
 
-    private void processFlag(String[] seg) {
+    private void processFlag(String[] seg, String line) {
         String flag = seg[0];
         
         switch(flag) {
             case "AM":   
-                processAM(seg);
+                storage.addAM(line.substring(3).trim());
                 break;
             case "AF":
                 break;
@@ -103,13 +103,5 @@ public class AffParser extends Parser {
                 System.out.println("Flag " + flag);
                 
         }
-    }
-    
-    private void processAM(String[] seg) {
-        Set<String> items = new HashSet<>(seg.length - 1);
-        for (int i = 1; i < seg.length; i++) {
-            items.add(seg[i]);
-        }
-        storage.addAM(items);
     }
 }
