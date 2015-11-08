@@ -55,6 +55,7 @@ public class DicParser extends Parser {
             String identifier = m.group(3);
             
             identifier = processIdentifier(identifier);
+            affixes = processAffixes(affixes);
             
             System.out.println("# " + word + ": " + affixes + " " + identifier);    
         }   
@@ -71,7 +72,19 @@ public class DicParser extends Parser {
         } catch(NumberFormatException ex) {
             // If not parsable, leave as is --
             return identifier;
-        }        
+        }
+    }
+
+    private String processAffixes(String affixes) {
+        try {
+            // Try to convert it to Int 
+            int reference = Integer.parseInt(affixes);
+            return storage.getAF(reference);
+                        
+        } catch(NumberFormatException ex) {
+            // If not parsable, leave as is --
+            return affixes;
+        }
     }
     
 }

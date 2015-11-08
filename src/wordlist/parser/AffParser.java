@@ -69,10 +69,11 @@ public class AffParser extends Parser {
         String flag = seg[0];
         
         switch(flag) {
-            case "AM":   
+            case "AM":
                 storage.addAM(line.substring(3).trim());
                 break;
             case "AF":
+                storage.addAF(line.substring(3).trim());
                 break;
             case "PFX":
                 break;
@@ -91,7 +92,7 @@ public class AffParser extends Parser {
                 storage.initAM(Integer.parseInt(seg[1]));
                 break;
             case "AF":
-                System.out.println("Flag " + flag + ": " + seg[1]);
+                storage.initAF(Integer.parseInt(seg[1]));
                 break;
             case "PFX":
                 System.out.println("Flag " + flag + ": " + seg[1]);

@@ -35,10 +35,12 @@ public class ReferenceStorage {
     
     // -- Attributes --
     protected List<String> AMArray;
+    protected List<String> AFArray;
     
     // -- Constructors --
     public ReferenceStorage() {
         AMArray = new ArrayList();
+        AFArray = new ArrayList();
     }
     
     // -- Methods --
@@ -51,6 +53,14 @@ public class ReferenceStorage {
         AMArray.add(items);
     }
     
+    public void initAF(int nbItems) {
+        AFArray = new ArrayList(nbItems);
+    }
+    
+    public void addAF(String items) {
+        AFArray.add(items);
+    }
+    
     public boolean isReady() {
         return true;
     }
@@ -59,6 +69,10 @@ public class ReferenceStorage {
 
     public String getAM(int reference) {
         return AMArray.get(reference - 1);
+    }
+    
+    public String getAF(int reference) {
+        return AFArray.get(reference - 1);
     }
     
 }
