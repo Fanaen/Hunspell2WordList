@@ -36,12 +36,20 @@ public class WordList {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        // Initialisation --
         AffParser aff = new AffParser();
         DicParser dic = new DicParser();
         String fileName = "fr-moderne";
         
+        // Process the reference file --
         aff.processFile("data/" + fileName + ".aff");
-        dic.processFile("data/" + fileName + ".dic");
+        
+        // Transfer references --
+        dic.setStorage(aff.getStorage());
+        
+        // Process the word file --
+        //dic.processFile("data/" + fileName + ".dic");
     }
     
 }

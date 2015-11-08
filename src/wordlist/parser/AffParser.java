@@ -23,15 +23,85 @@
  */
 package wordlist.parser;
 
+import java.util.HashSet;
+import java.util.Set;
+import wordlist.model.ReferenceStorage;
+
 /**
  *
  * @author Fanaen <contact@fanaen.fr>
  */
 public class AffParser extends Parser {
-
+        
+    // -- Attributes --
+    protected Set<String> flagSet;
+    
+    // -- Constructors --
+    
+    public AffParser() {
+        storage = new ReferenceStorage();
+        flagSet = new HashSet<>();
+    }
+    
+    // -- Methods --
+    
     @Override
     protected void processLine(String line) {
-        System.out.println("AFF: "+ line);
+        
+        // Handle spaces and empty lines --
+        line = line.trim();
+        if(line.equals("")) return;
+        
+        // Split and analyse the flag --
+        String[] seg = line.split(" ");
+        String flag = seg[0];
+        if(flagSet.contains(flag)) {
+            processFlag(seg);
+        }
+        else {
+            addFlag(seg);
+        }
+    }
+    
+    // -- Getters & Setters --
+
+    private void processFlag(String[] seg) {
+        String flag = seg[0];
+        
+        switch(flag) {
+            case "AM":                
+                break;
+            case "AF":
+                break;
+            case "PFX":
+                break;
+            case "SFX":
+                break;
+            default:
+        }        
+    }
+
+    private void addFlag(String[] seg) {
+        String flag = seg[0];
+        flagSet.add(flag);
+        
+        switch(flag) {
+            case "AM":
+                System.out.println("Flag " + flag + ": " + seg[1]);
+                break;
+            case "AF":
+                System.out.println("Flag " + flag + ": " + seg[1]);
+                break;
+            case "PFX":
+                System.out.println("Flag " + flag + ": " + seg[1]);
+                break;
+            case "SFX":
+                System.out.println("Flag " + flag + ": " + seg[1]);
+                break;
+            default:
+                System.out.println("Flag " + flag);
+                
+        }
     }
     
 }

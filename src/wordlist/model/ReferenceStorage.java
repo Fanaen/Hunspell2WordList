@@ -21,58 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package wordlist.parser;
-
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import wordlist.model.ReferenceStorage;
+package wordlist.model;
 
 /**
  *
  * @author Fanaen <contact@fanaen.fr>
  */
-public abstract class Parser {
-        
+public class ReferenceStorage {
+    
     // -- Attributes --
-    protected ReferenceStorage storage;
     
     // -- Constructors --
-    public Parser() {
-        
-    }
     
     // -- Methods --
     
-    public void processFile(String file) {
-        
-        // Check if storage is ready --
-        if(storage == null || !storage.isReady()) return;
-        
-        // Read the file --
-        try(BufferedReader br = new BufferedReader(new FileReader(file))) {
-            for(String line; (line = br.readLine()) != null; ) {
-                processLine(line);
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Parser.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Parser.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public boolean isReady() {
+        return true;
     }
-
-    protected abstract void processLine(String line);
     
     // -- Getters & Setters --
-
-    public ReferenceStorage getStorage() {
-        return storage;
-    }
-
-    public void setStorage(ReferenceStorage storage) {
-        this.storage = storage;
-    }    
+    
 }

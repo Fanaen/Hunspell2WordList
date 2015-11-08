@@ -28,10 +28,18 @@ package wordlist.parser;
  * @author Fanaen <contact@fanaen.fr>
  */
 public class DicParser extends Parser {
-
+    
+    // -- Attributes --
+    
+    // -- Constructors --
+    
+    // -- Methods --
+    
     @Override
     protected void processLine(String line) {
         System.out.println("DIC: "+ line);
     }
+    
+    // -- Getters & Setters --
     
 }
