@@ -23,6 +23,10 @@
  */
 package wordlist.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 /**
  *
  * @author Fanaen <contact@fanaen.fr>
@@ -30,15 +34,31 @@ package wordlist.model;
 public class ReferenceStorage {
     
     // -- Attributes --
+    protected List<Set<String>> AMArray;
     
     // -- Constructors --
+    public ReferenceStorage() {
+        AMArray = new ArrayList();
+    }
     
     // -- Methods --
+
+    public void initAM(int nbItems) {
+        AMArray = new ArrayList(nbItems);
+    }
+    
+    public void addAM(Set<String> items) {
+        AMArray.add(items);
+    }
     
     public boolean isReady() {
         return true;
     }
     
     // -- Getters & Setters --
+
+    public Set<String> getAM(int reference) {
+        return AMArray.get(reference - 1);
+    }
     
 }

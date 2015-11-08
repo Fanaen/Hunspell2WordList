@@ -49,7 +49,7 @@ public class WordList {
         dic.setStorage(aff.getStorage());
         
         // Process the word file --
-        //dic.processFile("data/" + fileName + ".dic");
+        dic.processFile("data/" + fileName + ".dic");
     }
     
 }

@@ -23,6 +23,10 @@
  */
 package wordlist.parser;
 
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  *
  * @author Fanaen <contact@fanaen.fr>
@@ -30,16 +34,50 @@ package wordlist.parser;
 public class DicParser extends Parser {
     
     // -- Attributes --
+    protected Pattern p;
+    protected Matcher m;
     
     // -- Constructors --
+    
+    public DicParser() {
+        p = Pattern.compile("^([^/\\t]+)/?([^\\t])\\t(.*)$");
+    }
     
     // -- Methods --
     
     @Override
     protected void processLine(String line) {
-        System.out.println("DIC: "+ line);
+        m = p.matcher(line.trim());
+        
+        if(m.matches()) {
+            String word = m.group(1);
+            String affixes = m.group(2);
+            String identifier = m.group(3);
+            
+            identifier = processIdentifier(identifier);
+            
+            System.out.println("# " + word + ": " + affixes + " " + identifier);    
+        }   
     }
     
     // -- Getters & Setters --
+
+    private String processIdentifier(String identifier) {
+        try {
+            // Try to convert it to Int 
+            int reference = Integer.parseInt(identifier);
+            Set<String> set = storage.getAM(reference);
+                    
+            identifier = "";
+            for (String id : set) {
+                identifier += id + " ";
+            }
+            return identifier;
+                        
+        } catch(NumberFormatException ex) {
+            // If not parsable, leave as is --
+            return identifier;
+        }        
+    }
     
 }

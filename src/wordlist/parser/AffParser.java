@@ -69,7 +69,8 @@ public class AffParser extends Parser {
         String flag = seg[0];
         
         switch(flag) {
-            case "AM":                
+            case "AM":   
+                processAM(seg);
                 break;
             case "AF":
                 break;
@@ -87,7 +88,7 @@ public class AffParser extends Parser {
         
         switch(flag) {
             case "AM":
-                System.out.println("Flag " + flag + ": " + seg[1]);
+                storage.initAM(Integer.parseInt(seg[1]));
                 break;
             case "AF":
                 System.out.println("Flag " + flag + ": " + seg[1]);
@@ -104,4 +105,11 @@ public class AffParser extends Parser {
         }
     }
     
+    private void processAM(String[] seg) {
+        Set<String> items = new HashSet<>(seg.length - 1);
+        for (int i = 1; i < seg.length; i++) {
+            items.add(seg[i]);
+        }
+        storage.addAM(items);
+    }
 }
