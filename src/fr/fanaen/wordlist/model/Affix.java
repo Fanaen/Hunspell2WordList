@@ -21,56 +21,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package wordlist.parser;
+package fr.fanaen.wordlist.model;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import wordlist.WordListGeneratorListener;
-import wordlist.model.Word;
 
 /**
  *
  * @author Fanaen <contact@fanaen.fr>
  */
-public class DicParser extends Parser {
+public class Affix {
     
     // -- Attributes --
-    protected Pattern p;
-    protected Matcher m;
-    protected long lineCount = 0;
-    protected WordListGeneratorListener listener;
+    protected List<AffixOption> optionList;
+    protected boolean prefix;
     
     // -- Constructors --
-    
-    public DicParser(WordListGeneratorListener parent) {
-        p = Pattern.compile("^([^/\\t]+)/?(\\S*)\\t(.*)$");
-        listener = parent;
+
+    public Affix(boolean prefix, int nbItems) {
+        optionList = new ArrayList<>(nbItems);
+        this.prefix = prefix;
     }
     
     // -- Methods --
-    
-    @Override
-    protected void processLine(String line) {
-        m = p.matcher(line.trim());
-        
-        if(m.matches()) {
-            Word word = new Word(m.group(1), m.group(2),  m.group(3));
-            
-            word.processIdentifiers(storage);
-            word.processAffixes(storage);
-            
-            listener.onNewWord(word);
-            word.processNewWordsFromAffixes(storage, listener);
-            lineCount++;
-        }   
+
+    public void addOption(AffixOption option) {
+        option.setPrefix(prefix);
+        optionList.add(option);
     }
     
-    public void displayCount() {
-        System.out.println("DicParser stats:");
-        System.out.println(" * " + lineCount + " lines");
+    public int getNbOptions() {
+        return optionList.size();
     }
+    
     
     // -- Getters & Setters --
-    
+
+    public List<Word> apply(Word word, ReferenceStorage storage) {
+        List<Word> list = new LinkedList<>();
+        
+        for (AffixOption option : optionList) {
+            if(option.isApplyable(word)) {
+                list.add(option.apply((Word) word.clone()));
+            }       
+        }
+        
+        return list;
+    }
 }

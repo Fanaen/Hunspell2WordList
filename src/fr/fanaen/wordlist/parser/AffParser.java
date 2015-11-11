@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package wordlist.parser;
+package fr.fanaen.wordlist.parser;
 
 import java.util.HashSet;
 import java.util.Set;
-import wordlist.model.Affix;
-import wordlist.model.AffixOption;
-import wordlist.model.ReferenceStorage;
+import fr.fanaen.wordlist.model.Affix;
+import fr.fanaen.wordlist.model.AffixOption;
+import fr.fanaen.wordlist.model.ReferenceStorage;
 
 /**
  *

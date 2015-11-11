@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package wordlist;
+package fr.fanaen.wordlist;
 
-import wordlist.model.Word;
+import fr.fanaen.wordlist.model.Word;
 
 /**
  *

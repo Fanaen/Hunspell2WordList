@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package wordlist;
+package fr.fanaen.wordlist;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
-import wordlist.model.Word;
+import fr.fanaen.wordlist.model.Word;
 
 /**
  *
@@ -39,6 +39,7 @@ public class WordListCLI {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        boolean consoleOutput = true;
         String input = "";
         String output = "";
         WordListGeneratorListener listener = null;
@@ -50,11 +51,6 @@ public class WordListCLI {
             // Second argument : file to print --
             if(args.length > 1) {
                 output = args[1];
-                try {
-                    listener = createOutputToFileListener(output);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
             }
         } 
         else {
@@ -62,11 +58,31 @@ public class WordListCLI {
             System.out.println("Command help: wordlist [InputFilePath] [OutputFilePath]");
         }
         
-        // If the input file name is incorrect --
+        // If the input file's name is incorrect --
         while(input.isEmpty()) {
+            
+            // Dictionary in console can't be used if we have to ask something --
+            consoleOutput = false;
+            
+            // Ask the path --
             System.out.print("Enter the input file's path: ");
             Scanner in = new Scanner(System.in, "UTF-8");
             input = in.nextLine();
+        }
+        
+        // If the dictionary should be printed in a file and the output info is empty --
+        if(!consoleOutput) {
+            while(output.isEmpty() || listener == null) {
+                System.out.print("Enter the output file's path: ");
+                Scanner in = new Scanner(System.in, "UTF-8");
+                output = in.nextLine();
+                
+                try {
+                    listener = createOutputToFileListener(output);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
         }
         
         // If the listener is not set --
@@ -81,6 +97,10 @@ public class WordListCLI {
             generator.setFileName(input);
             generator.addListener(listener);
             generator.readFile();
+            
+            if(!consoleOutput) {
+                generator.displayStatistics();
+            }
         } 
         catch (Exception ex) {
             ex.printStackTrace();

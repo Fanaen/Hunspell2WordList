@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package wordlist.model;
+package fr.fanaen.wordlist.model;
 
 import java.util.LinkedList;
 import java.util.List;
-import wordlist.WordListGeneratorListener;
+import fr.fanaen.wordlist.WordListGeneratorListener;
 
 /**
  *

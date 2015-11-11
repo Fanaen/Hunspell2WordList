@@ -21,17 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package wordlist;
+package fr.fanaen.wordlist;
 
-import exception.NoFileSetException;
-import exception.NoListenerSetException;
+import fr.fanaen.wordlist.exception.NoFileSetException;
+import fr.fanaen.wordlist.exception.NoListenerSetException;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import wordlist.model.ReferenceStorage;
-import wordlist.model.Word;
-import wordlist.parser.AffParser;
-import wordlist.parser.DicParser;
+import fr.fanaen.wordlist.model.ReferenceStorage;
+import fr.fanaen.wordlist.model.Word;
+import fr.fanaen.wordlist.parser.AffParser;
+import fr.fanaen.wordlist.parser.DicParser;
 
 /**
  *

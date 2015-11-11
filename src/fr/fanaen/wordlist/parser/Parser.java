@@ -21,52 +21,57 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package wordlist.model;
+package fr.fanaen.wordlist.parser;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import fr.fanaen.wordlist.model.ReferenceStorage;
 
 /**
  *
  * @author Fanaen <contact@fanaen.fr>
  */
-public class Affix {
-    
+public abstract class Parser {
+        
     // -- Attributes --
-    protected List<AffixOption> optionList;
-    protected boolean prefix;
+    protected ReferenceStorage storage;
     
     // -- Constructors --
-
-    public Affix(boolean prefix, int nbItems) {
-        optionList = new ArrayList<>(nbItems);
-        this.prefix = prefix;
+    public Parser() {
+        
     }
     
     // -- Methods --
+    
+    public void processFile(String filePath) throws IOException {
+        
+        // Check if storage is ready --
+        if(storage == null || !storage.isReady()) return;
+        
+        // Get some info converted --
+        File file = new File(filePath);
+        Charset charset = Charset.forName("UTF-8");
+        
+        // Read the file --
+        try(BufferedReader br = Files.newBufferedReader(file.toPath(), charset)) {
+            for(String line; (line = br.readLine()) != null; ) {
+                processLine(line);
+            }
+        }
+    }
 
-    public void addOption(AffixOption option) {
-        option.setPrefix(prefix);
-        optionList.add(option);
-    }
-    
-    public int getNbOptions() {
-        return optionList.size();
-    }
-    
+    protected abstract void processLine(String line);
     
     // -- Getters & Setters --
 
-    public List<Word> apply(Word word, ReferenceStorage storage) {
-        List<Word> list = new LinkedList<>();
-        
-        for (AffixOption option : optionList) {
-            if(option.isApplyable(word)) {
-                list.add(option.apply((Word) word.clone()));
-            }       
-        }
-        
-        return list;
+    public ReferenceStorage getStorage() {
+        return storage;
     }
+
+    public void setStorage(ReferenceStorage storage) {
+        this.storage = storage;
+    }    
 }

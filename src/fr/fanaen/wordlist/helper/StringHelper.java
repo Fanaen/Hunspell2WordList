@@ -21,57 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package wordlist.parser;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import wordlist.model.ReferenceStorage;
+package fr.fanaen.wordlist.helper;
 
 /**
  *
  * @author Fanaen <contact@fanaen.fr>
  */
-public abstract class Parser {
-        
-    // -- Attributes --
-    protected ReferenceStorage storage;
+public class StringHelper {
     
-    // -- Constructors --
-    public Parser() {
-        
-    }
-    
-    // -- Methods --
-    
-    public void processFile(String filePath) throws IOException {
-        
-        // Check if storage is ready --
-        if(storage == null || !storage.isReady()) return;
-        
-        // Get some info converted --
-        File file = new File(filePath);
-        Charset charset = Charset.forName("UTF-8");
-        
-        // Read the file --
-        try(BufferedReader br = Files.newBufferedReader(file.toPath(), charset)) {
-            for(String line; (line = br.readLine()) != null; ) {
-                processLine(line);
-            }
+    public static String mergeSegments(String[] segs, int start, String sep) {
+        String result = "";
+        for (int i = start; i < segs.length; i++) {
+            result += (i == start ? "" : sep) + segs[i];
         }
+        return result;
     }
-
-    protected abstract void processLine(String line);
-    
-    // -- Getters & Setters --
-
-    public ReferenceStorage getStorage() {
-        return storage;
-    }
-
-    public void setStorage(ReferenceStorage storage) {
-        this.storage = storage;
-    }    
 }
