@@ -56,14 +56,18 @@ public class WordListCLI {
                     ex.printStackTrace();
                 }
             }
+        } 
+        else {
+            // Display a help message --
+            System.out.println("Command help: wordlist [InputFilePath] [OutputFilePath]");
         }
         
         // If the input file name is incorrect --
         while(input.isEmpty()) {
-            System.out.print("Input file: ");
+            System.out.print("Enter the input file's path: ");
             Scanner in = new Scanner(System.in, "UTF-8");
             input = in.nextLine();
-        } 
+        }
         
         // If the listener is not set --
         if(listener == null) {
