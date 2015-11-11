@@ -55,7 +55,7 @@ public class WordListCLI {
         } 
         else {
             // Display a help message --
-            System.out.println("Command help: wordlist [InputFilePath] [OutputFilePath]");
+            System.out.println("Command help: hunspell2wordlist [InputFilePath] [OutputFilePath]");
         }
         
         // If the input file's name is incorrect --
