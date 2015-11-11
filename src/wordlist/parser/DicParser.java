@@ -26,7 +26,7 @@ package wordlist.parser;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import wordlist.model.Affix;
+import wordlist.WordListGeneratorListener;
 import wordlist.model.Word;
 
 /**
@@ -39,12 +39,13 @@ public class DicParser extends Parser {
     protected Pattern p;
     protected Matcher m;
     protected long lineCount = 0;
-    protected long wordCount = 0;
+    protected WordListGeneratorListener listener;
     
     // -- Constructors --
     
-    public DicParser() {
+    public DicParser(WordListGeneratorListener parent) {
         p = Pattern.compile("^([^/\\t]+)/?(\\S*)\\t(.*)$");
+        listener = parent;
     }
     
     // -- Methods --
@@ -59,21 +60,14 @@ public class DicParser extends Parser {
             word.processIdentifiers(storage);
             word.processAffixes(storage);
             
-            //System.out.print("> ");
-            //word.display();
-            List<Word> words = word.processWords(storage);
-            for (Word w : words) {
-                //System.out.print("  * ");
-                //w.display();
-                wordCount++;
-            }
+            listener.onNewWord(word);
+            word.processNewWordsFromAffixes(storage, listener);
             lineCount++;
         }   
     }
     
     public void displayCount() {
         System.out.println("DicParser stats:");
-        System.out.println(" * " + wordCount + " words");
         System.out.println(" * " + lineCount + " lines");
     }
     

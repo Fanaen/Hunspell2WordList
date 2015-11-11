@@ -23,37 +23,14 @@
  */
 package wordlist;
 
-import wordlist.model.ReferenceStorage;
-import wordlist.parser.AffParser;
-import wordlist.parser.DicParser;
+import wordlist.model.Word;
 
 /**
  *
  * @author Fanaen <contact@fanaen.fr>
  */
-public class WordList {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
-        // Initialisation --
-        AffParser aff = new AffParser();
-        DicParser dic = new DicParser();
-        String fileName = "fr-moderne";
-        
-        // Process the reference file --
-        aff.processFile("data/" + fileName + ".aff");
-        
-        // Transfer references --
-        ReferenceStorage storage = aff.getStorage();
-        dic.setStorage(storage);
-        storage.displayStatistics();
-        
-        // Process the word file --
-        dic.processFile("data/" + fileName + ".dic");
-        dic.displayCount();
-    }
+public interface WordListGeneratorListener {
     
+    public void onNewWord(Word newWord);
+    public void onGenerationEnd();
 }

@@ -25,6 +25,7 @@ package wordlist.model;
 
 import java.util.LinkedList;
 import java.util.List;
+import wordlist.WordListGeneratorListener;
 
 /**
  *
@@ -71,24 +72,20 @@ public class Word implements Cloneable {
         }
     }
     
-    public List<Word> processWords(ReferenceStorage storage) {
-        List<Word> result = new LinkedList<>();
-        
+    public void processNewWordsFromAffixes(ReferenceStorage storage, WordListGeneratorListener listener) {        
         // Parse affixes --
         for (Affix a : storage.getAffixes(affixes)) {
             // Apply each affix (multiple options) --
             for (Word w : a.apply(this, storage)) {
-                result.add(w);
+                listener.onNewWord(w);
                 
                 // New affixes, restart --
-                if(!w.getAffixes().equals("")) {
+                if(!w.getAffixes().isEmpty()) {
                     w.processAffixes(storage);
-                    result.addAll(w.processWords(storage));
+                    w.processNewWordsFromAffixes(storage, listener);
                 }
             }
         }
-        
-        return result;
     }
 
     public void display() {

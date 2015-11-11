@@ -24,11 +24,10 @@
 package wordlist.parser;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import wordlist.model.ReferenceStorage;
 
 /**
@@ -47,20 +46,20 @@ public abstract class Parser {
     
     // -- Methods --
     
-    public void processFile(String file) {
+    public void processFile(String filePath) throws IOException {
         
         // Check if storage is ready --
         if(storage == null || !storage.isReady()) return;
         
+        // Get some info converted --
+        File file = new File(filePath);
+        Charset charset = Charset.forName("UTF-8");
+        
         // Read the file --
-        try(BufferedReader br = new BufferedReader(new FileReader(file))) {
+        try(BufferedReader br = Files.newBufferedReader(file.toPath(), charset)) {
             for(String line; (line = br.readLine()) != null; ) {
                 processLine(line);
             }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Parser.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Parser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
