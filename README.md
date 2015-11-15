@@ -35,6 +35,9 @@ generator.addListener(listener);
 generator.readFile();
 generator.displayStatistics();
 ```
+## Download
+
+- [Hunspell2WordList v0.1.0](http://storage.fanaen.fr/Projects/2015.Hunspell2WordList/Hunspell2WordList-v0.1.0.zip)
 
 ## Contributors
 - Elouan Poupard-Cosquer aka Fanaen ([contact@fanaen.fr](mailto:contact@fanaen.fr))
