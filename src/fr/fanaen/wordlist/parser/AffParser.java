@@ -108,13 +108,24 @@ public class AffParser extends Parser {
 
     private void processAffixes(String[] seg, String line) {
         // Preparation --
-        if(seg.length < 5) {
-            storage.initAffix(seg[1], Integer.parseInt(seg[3]), seg[0].equals("PFX"));
+        if(seg[2].equals("N") || seg[2].equals("Y")) {
+
+            String id = seg[1];
+            int nbItems = Integer.parseInt(seg[3]);
+            boolean prefix = seg[0].equals("PFX");
+
+            storage.initAffix(id, nbItems, prefix);
         } 
         // New affixe --
         else {
             Affix affix = storage.getAffix(seg[1]);
-            affix.addOption(new AffixOption(seg[2], seg[3], seg[4], seg.length >= 6 ? seg[5] : ""));
+
+            String stripping = seg[2];
+            String affixStr = seg[3];
+            String conditions = seg.length >= 5 ? seg[4] : "."; // Handle no conditions (always true)
+            String identifiers = seg.length >= 6 ? seg[5] : "";
+
+            affix.addOption(new AffixOption(stripping, affixStr, conditions, identifiers));
         }
     }
 }
