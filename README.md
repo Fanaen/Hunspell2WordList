@@ -2,7 +2,7 @@
 
 H2WL is a Java library/tool generating every possible word from Hunspell dictionaries.
 
-Currently, the tool is design to handle [the french Dictionary by Dicollecte.org](http://www.dicollecte.org/download.php?prj=fr) but it should handle other dictionaries as well.
+Currently, the tool is designed to handle [the french Dictionary by Dicollecte.org](http://www.dicollecte.org/download.php?prj=fr) but it should handle other dictionaries as well.
 
 ## Use it as a tool
 You can run it directly in the shell like this:
