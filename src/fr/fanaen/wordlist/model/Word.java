@@ -40,16 +40,18 @@ public class Word implements Cloneable {
     
     // -- Constructors --
 
-    public Word(String content, String affixes, String identifiers) {
+    public Word(String content, String affixes) {
         this.content = content;
         this.affixes = affixes;
-        this.identifiers = identifiers;
     }
     
     // -- Methods --
     
     public void processIdentifiers(ReferenceStorage storage) {
-         try {
+        if(identifiers == null)
+            return;
+
+        try {
             // Try to convert it to Int 
             int reference = Integer.parseInt(identifiers);
             identifiers = storage.getAM(reference);

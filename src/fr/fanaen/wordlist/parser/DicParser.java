@@ -44,7 +44,7 @@ public class DicParser extends Parser {
     // -- Constructors --
     
     public DicParser(WordListGeneratorListener parent) {
-        p = Pattern.compile("^([^/\\t]+)/?(\\S*)\\t(.*)$");
+        p = Pattern.compile("^([^/\\t]+)/?(\\S*)\\t?(.*)?$");
         listener = parent;
     }
     
@@ -55,9 +55,16 @@ public class DicParser extends Parser {
         m = p.matcher(line.trim());
         
         if(m.matches()) {
-            Word word = new Word(m.group(1), m.group(2),  m.group(3));
-            
-            word.processIdentifiers(storage);
+            String content = m.group(1);
+            String affixes = m.group(2);
+            Word word = new Word(content, affixes);
+
+            // Check if the identifier col is present --
+            if(m.groupCount() > 2) {
+                word.setIdentifiers(m.group(3));
+                word.processIdentifiers(storage);
+            }
+
             word.processAffixes(storage);
             
             listener.onNewWord(word);
