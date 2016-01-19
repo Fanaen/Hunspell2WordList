@@ -1,5 +1,13 @@
 data/
 lib/
+
+# Netbeans files
 nbproject/
 /build/
+build.xml
 /dist/
+
+# Intellij files
+.idea/
+*.iml
+out/
