@@ -71,6 +71,10 @@ public class Word implements Cloneable {
         } catch(NumberFormatException ex) {
             // If not parsable, leave as is --
             affixes = "#" + affixes;
+        } catch(IndexOutOfBoundsException ex) {
+            // Case where it's a number but it's not a reference
+            // If not reachable, leave as is --
+            affixes = "#" + affixes;
         }
     }
     
