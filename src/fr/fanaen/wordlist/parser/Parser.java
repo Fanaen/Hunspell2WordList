@@ -57,9 +57,23 @@ public abstract class Parser {
         
         // Read the file --
         try(BufferedReader br = Files.newBufferedReader(file.toPath(), charset)) {
+            int i = 1;
+
             for(String line; (line = br.readLine()) != null; ) {
-                processLine(line);
+                try {
+                    processLine(line);
+                }
+                catch(Exception ex) {
+                    System.err.println("Line "+ i +": " + line);
+                    throw ex;
+                }
+
+                i++;
             }
+        }
+        catch(Exception ex) {
+            System.err.println("Error processing " + filePath);
+            throw ex;
         }
     }
 

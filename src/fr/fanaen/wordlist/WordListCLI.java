@@ -96,11 +96,8 @@ public class WordListCLI {
             
             generator.setFileName(input);
             generator.addListener(listener);
+            generator.setStatisticsDisplay(!consoleOutput);
             generator.readFile();
-            
-            if(!consoleOutput) {
-                generator.displayStatistics();
-            }
         } 
         catch (Exception ex) {
             ex.printStackTrace();

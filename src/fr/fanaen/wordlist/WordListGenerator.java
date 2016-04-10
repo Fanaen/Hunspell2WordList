@@ -49,7 +49,8 @@ public class WordListGenerator implements WordListGeneratorListener {
     protected ReferenceStorage storage;
     
     protected long wordCount = 0;
-    
+    private boolean statisticsDisplay = false;
+
     // -- Constructors --
     
     public WordListGenerator() {
@@ -92,10 +93,13 @@ public class WordListGenerator implements WordListGeneratorListener {
         
         // Process the reference file --
         affParser.processFile(fileName + ".aff");
-        
+
         // Transfer references --
         storage = affParser.getStorage();
         dicParser.setStorage(storage);
+
+        if(statisticsDisplay) // STATS --
+            storage.displayStatistics();
         
         // Process the word file --
         dicParser.processFile(fileName + ".dic");
@@ -104,13 +108,10 @@ public class WordListGenerator implements WordListGeneratorListener {
         for (WordListGeneratorListener l : listenerList) {
             l.onGenerationEnd();
         }
-    }
-    
-    public void displayStatistics() {
-        if(affParser != null && storage != null) {
-            storage.displayStatistics();
+
+        if(statisticsDisplay) { // STATS --
             dicParser.displayCount();
-            
+
             System.out.println("WordListGenerator stats:");
             System.out.println(" * " + wordCount + " words");
         }
@@ -137,5 +138,13 @@ public class WordListGenerator implements WordListGeneratorListener {
 
     public void setFileName(String newfileName) {
         fileName = newfileName;
-    }    
+    }
+
+    public void setStatisticsDisplay(boolean statisticsDisplay) {
+        this.statisticsDisplay = statisticsDisplay;
+    }
+
+    public boolean isStatisticsDisplay() {
+        return statisticsDisplay;
+    }
 }
