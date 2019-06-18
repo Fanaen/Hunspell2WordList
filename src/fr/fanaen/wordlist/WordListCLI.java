@@ -51,6 +51,12 @@ public class WordListCLI {
             // Second argument : file to print --
             if(args.length > 1) {
                 output = args[1];
+
+                try {
+                    listener = createOutputToFileListener(output);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         } 
         else {
