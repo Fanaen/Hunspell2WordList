@@ -44,7 +44,11 @@ public class DicParser extends Parser {
     // -- Constructors --
     
     public DicParser(WordListGeneratorListener parent) {
-        p = Pattern.compile("^([^/\\t]+)/?(\\S*)\\t?(.*)?$");
+        // Example: ADN/L'D'Q' po:nom is:mas is:inv
+        // Group 1, the base: ADN
+        // Group 2, affixes: L'D'Q'
+        // Group 3, tags: po:nom is:mas is:inv
+        p = Pattern.compile("^([^/\\t ]+)/?(\\S*)\\t?(.*)?$");
         listener = parent;
     }
     
