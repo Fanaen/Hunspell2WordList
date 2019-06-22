@@ -48,8 +48,8 @@ public class AffParser extends Parser {
     // -- Methods --
     
     @Override
-    protected void processLine(String line) {
-        
+    protected void processLine(String line, int lineNumber) {
+
         // Handle spaces and empty lines --
         line = line.trim();
         if(line.equals("")) return;

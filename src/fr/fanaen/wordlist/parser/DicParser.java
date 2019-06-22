@@ -51,7 +51,12 @@ public class DicParser extends Parser {
     // -- Methods --
     
     @Override
-    protected void processLine(String line) {
+    protected void processLine(String line, int lineNumber) {
+        if (lineNumber == 0) {
+            // The first line contains the number of items in the file.
+            // We don't care, so we ignore this line
+            return;
+        }
         m = p.matcher(line.trim());
         
         if(m.matches()) {

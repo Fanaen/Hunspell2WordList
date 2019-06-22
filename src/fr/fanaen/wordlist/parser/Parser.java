@@ -57,14 +57,14 @@ public abstract class Parser {
         
         // Read the file --
         try(BufferedReader br = Files.newBufferedReader(file.toPath(), charset)) {
-            int i = 1;
+            int i = 0;
 
             for(String line; (line = br.readLine()) != null; ) {
                 try {
-                    processLine(line);
+                    processLine(line, i);
                 }
                 catch(Exception ex) {
-                    System.err.println("Line "+ i +": " + line);
+                    System.err.println("Line "+ (i + 1) +": " + line);
                     throw ex;
                 }
 
@@ -77,7 +77,7 @@ public abstract class Parser {
         }
     }
 
-    protected abstract void processLine(String line);
+    protected abstract void processLine(String line, int lineNumber);
     
     // -- Getters & Setters --
 
