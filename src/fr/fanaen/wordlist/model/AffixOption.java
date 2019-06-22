@@ -56,10 +56,10 @@ public class AffixOption {
         if(conditions.equals(".")) applyable = true;
         
         if(prefix) {
-            applyable = word.getContent().matches(conditions +".+");   
+            applyable = word.getContent().matches(conditions +".*");
         }
         else {
-            applyable = word.getContent().matches(".+" + conditions);
+            applyable = word.getContent().matches(".*" + conditions);
         }
         
         //System.out.print("  * " + applyable + " for " + word.getContent() + " ");
